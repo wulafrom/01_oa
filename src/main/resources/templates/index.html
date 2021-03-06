@@ -5,7 +5,7 @@
 <title>办公无纸化系统</title>
 
 <!-- 最新的 Bootstrap 核心 css 文件 -->
-<!-- 在url上 使用 @标签 可以帮我们 自动加上 contextpath -->
+<!-- 在url上 使用 @标签 可以帮我们 自动加上 contextpath:/static -->
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script th:src="@{/js/common/jquery-3.4.1.min.js}" ></script>
@@ -14,7 +14,6 @@
 <body>
 
 <!--  导航栏                      开始  			 ↓ -->
-
 <nav class="navbar navbar-default">
 
 
@@ -46,7 +45,7 @@
           </a>
         
           <ul class="dropdown-menu">
-            <li><a href="/account/list">用户列表</a></li>
+            <li><a th:href="@{/account/list}" >用户列表</a></li>
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
@@ -102,14 +101,13 @@
     
   </div><!-- /.container-fluid -->
 </nav>
-
-
 <!--  导航栏                      结束  			↑       -->
+
 
 <!--  巨幕       开始   ↓ -->
 <div class="jumbotron">
   <h1>欢迎使用无纸化办公系统</h1>
-  <p>.version 1.0 </p>
+  <p> version 1.0 </p>
   <p></p>
 </div>
 <!--  巨幕       结束   ↑ -->

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>办公无纸化系统</title>
@@ -119,7 +119,7 @@
  	<th>操作</th>
  </tr>
  
- <tr th:each="account : ${accountList}">
+ <tr th:each="account : ${page.list}">
  	<td th:text="${accountStat.count}"></td>
  	<td th:text="${account.id}">工号</td>
  	<td th:text="${account.loginName}">loginName</td>
@@ -127,33 +127,237 @@
  	<td th:text="${account.age}">age</td>
  	<td th:text="${account.location}">location</td>
  	<td th:text="${account.role}">role</td>
- 	<td>操作</td>
+ 	<td>
+
+
+		<a class="btn btn-danger" th:href = "@{'javascript:deleteById('+${account.id}+');'}">
+		删除
+		</a>
+		
+		修改密码
+
+
+
+</td>
  	
  
  </tr>
 </table>
+
 <nav aria-label="Page navigation">
   <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
+    
+    <li th:class="${page.prePage} == 0?'disabled' :'' ">
+      <a th:href="@{${page.prePage} == 0?'javascript:void(0);' :'/account/list?pageNum='+${page.prePage}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li><a th:href="@{/account/list?pageNum=1}">1</a></li>
-    <li><a th:href="@{/account/list?pageNum=2}">2</a></li>
-    <li><a th:href="@{/account/list?pageNum=3}">3</a></li>
-    <li><a th:href="@{/account/list?pageNum=4}">4</a></li>
-    <li><a th:href="@{/account/list?pageNum=5}">5</a></li>
+    
+    
+    <li th:each="pageNum : ${page.navigatepageNums}"><a th:href="@{'/account/list?pageNum='+${pageNum}}">[[${pageNum}]]</a></li>
+    
     <li>
-      <a href="#" aria-label="Next">
+      <a th:href="@{'/account/list?pageNum='+${page.nextPage}}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
   </ul>
 </nav>
 
-<!--  列表       结束   ↑ -->
+    <div id="com-alert" class="modal" style="z-index:9999;display: none;" >  
+      <div class="modal-dialog modal-sm">  
+        <div class="modal-content">  
+          <div class="modal-header">  
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>  
+            <h5 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h5>  
+          </div>  
+          <div class="modal-body small">  
+            <p>[Message]</p>  
+          </div>  
+          <div class="modal-footer" >  
+            <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>  
+            <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>  
+          </div>  
+        </div>  
+      </div>  
+    </div> 
 
+
+
+
+
+<!--  列表       结束   ↑ -->
+<script type="text/javascript">
+
+$(function () {  
+	  window.Modal = function () {  
+	    var reg = new RegExp("\\[([^\\[\\]]*?)\\]", 'igm');  
+	    var alr = $("#com-alert");  
+	    var ahtml = alr.html();  
+	  
+	    var _tip = function (options, sec) {  
+	        alr.html(ahtml);    // 复原  
+	        alr.find('.ok').hide();  
+	        alr.find('.cancel').hide();  
+	        alr.find('.modal-content').width(500);  
+	        _dialog(options, sec);  
+	          
+	        return {  
+	            on: function (callback) {  
+	            }  
+	        };  
+	    };  
+	  
+	    var _alert = function (options) {  
+	      alr.html(ahtml);  // 复原  
+	      alr.find('.ok').removeClass('btn-success').addClass('btn-primary');  
+	      alr.find('.cancel').hide();  
+	      _dialog(options);  
+	  
+	      return {  
+	        on: function (callback) {  
+	          if (callback && callback instanceof Function) {  
+	            alr.find('.ok').click(function () { callback(true) });  
+	          }  
+	        }  
+	      };  
+	    };  
+	  
+	    var _confirm = function (options) {  
+	      alr.html(ahtml); // 复原  
+	      alr.find('.ok').removeClass('btn-primary').addClass('btn-success');  
+	      alr.find('.cancel').show();  
+	      _dialog(options);  
+	  
+	      return {  
+	        on: function (callback) {  
+	          if (callback && callback instanceof Function) {  
+	            alr.find('.ok').click(function () { callback(true) });  
+	            alr.find('.cancel').click(function () { return; });  
+	          }  
+	        }  
+	      };  
+	    };  
+	  
+	    var _dialog = function (options) {  
+	      var ops = {  
+	        msg: "提示内容",  
+	        title: "操作提示",  
+	        btnok: "确定",  
+	        btncl: "取消"  
+	      };  
+	  
+	      $.extend(ops, options);  
+	  
+	      var html = alr.html().replace(reg, function (node, key) {  
+	        return {  
+	          Title: ops.title,  
+	          Message: ops.msg,  
+	          BtnOk: ops.btnok,  
+	          BtnCancel: ops.btncl  
+	        }[key];  
+	      });  
+	        
+	      alr.html(html);  
+	      alr.modal({  
+	        width: 250,  
+	        backdrop: 'static'  
+	      });  
+	    }  
+	  
+	    return {  
+	      tip: _tip,  
+	      alert: _alert,  
+	      confirm: _confirm  
+	    }  
+	  
+	  }();  
+	});
+function showTip(msg, sec, callback){  
+  if(!sec) {  
+      sec = 1000;  
+  }  
+  Modal.tip({  
+      title:'提示',  
+      msg: msg  
+  }, sec);  
+  setTimeout(callback, sec);  
+}  
+
+/** 
+* 显示消息 
+* @param msg 
+*/  
+function showMsg(msg, callback){  
+  Modal.alert({  
+      title:'提示',  
+      msg: msg,  
+      btnok: '确定'  
+  }).on(function (e) {  
+      if(callback){  
+          callback();  
+      }  
+   });  
+}  
+
+/** 
+* 模态对话框 
+* @param msg 
+* @returns 
+*/  
+function showConfirm(msg,callback){  
+  //var res = false;  
+  Modal.confirm(  
+    {  
+        title:'提示',  
+        msg: msg,  
+    }).on( function (e) {  
+        callback();  
+        //res=true;  
+    });  
+  //return res;  
+}
+
+
+
+
+	function deleteById(id){
+		
+		console.log("id:" + id)
+		// 直接连接的方式 访问 controller里的删除方法
+		// 异步通过ajax 去访问 带有json访问结果的controller
+		
+		
+	//	showTip("haha", 5000, function() {});
+		
+	//	showMsg("haha", function() {});
+		showConfirm("haha", function() {
+			// 确认删除
+			var url = "/account/deleteById";
+			var args = {id:id};
+			// RESPStat 类型的结果
+			$.post(url,args,function(data){
+				console.log(data)
+				if (data.code == 200){
+					//删除成功，刷新页面
+					window.location.reload();
+				}else {
+					alert(data.msg)
+				}
+			});
+		});
+		
+		
+	//	var isDel = confirm("真的确定要删除吗？");
+		
+//		if(isDel == false){
+	//		return;
+	//	}
+		
+	
+	}
+// 锋利的jQuery
+</script>
 
 
 </body>

@@ -19,14 +19,12 @@ import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-
     private final AccountMapper accountMapper;
 
     @Autowired
     public AccountServiceImpl(AccountMapper accountMapper) {
         this.accountMapper = accountMapper;
     }
-
 
     @Override
     public Account findByLoginNameAndPassword(String loginName, String password) {

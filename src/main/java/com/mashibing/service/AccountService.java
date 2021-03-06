@@ -9,14 +9,13 @@ import com.mashibing.entity.Account;
  */
 public interface AccountService {
 
-
     /**
      *  根据名称和密码查询用户
      * @param loginName 登录名
      * @param password 密码
      * @return 用户信息
      */
-    public Account findByLoginNameAndPassword(String loginName, String password);
+     Account findByLoginNameAndPassword(String loginName, String password);
 
     /**
      *  分页查询用户
@@ -24,5 +23,5 @@ public interface AccountService {
      * @param pageSize 每页个数
      * @return 多个用户信息
      */
-    public PageInfo<Account> findByPage(int pageNum, int pageSize);
+     PageInfo<Account> findByPage(int pageNum, int pageSize);
 }

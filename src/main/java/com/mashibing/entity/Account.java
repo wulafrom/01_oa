@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * account
- * @author 
+ * @author humm
  */
 public class Account implements Serializable {
     private Integer id;
@@ -116,19 +116,17 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", loginName=").append(loginName);
-        sb.append(", password=").append(password);
-        sb.append(", nickName=").append(nickName);
-        sb.append(", age=").append(age);
-        sb.append(", location=").append(location);
-        sb.append(", role=").append(role);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", id=" + id +
+                ", loginName=" + loginName +
+                ", password=" + password +
+                ", nickName=" + nickName +
+                ", age=" + age +
+                ", location=" + location +
+                ", role=" + role +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * 入口
  * @author: h'mm
  * @date: 2021/3/6 0:14:01
  */

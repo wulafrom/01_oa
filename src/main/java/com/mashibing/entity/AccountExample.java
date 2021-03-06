@@ -3,6 +3,11 @@ package com.mashibing.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AccountExample
+ *
+ * @author humm
+ */
 public class AccountExample {
     protected String orderByClause;
 
@@ -63,10 +68,10 @@ public class AccountExample {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class BaseGeneratedCriteria {
         protected List<Criterion> criteria;
 
-        protected GeneratedCriteria() {
+        protected BaseGeneratedCriteria() {
             super();
             criteria = new ArrayList<>();
         }
@@ -576,8 +581,9 @@ public class AccountExample {
     }
 
     /**
+     *
      */
-    public static class Criteria extends GeneratedCriteria {
+    public static class Criteria extends BaseGeneratedCriteria {
         protected Criteria() {
             super();
         }
