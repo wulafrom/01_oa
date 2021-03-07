@@ -3,6 +3,7 @@ package com.mashibing.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mashibing.RespStat;
 import com.mashibing.entity.Account;
 import com.mashibing.entity.AccountExample;
 import com.mashibing.mapper.AccountMapper;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 /**
  * AccountService 方法实现
+ *
  * @author: h'mm
  * @date: 2021/3/6 0:24:45
  */
@@ -38,8 +41,22 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public PageInfo<Account> findByPage(int pageNum, int pageSize) {
+
         PageHelper.startPage(pageNum, pageSize);
         List<Account> accounts = accountMapper.selectByExample(new AccountExample());
-        return new PageInfo<>(accounts);
+
+        return new PageInfo<>(accounts, 5);
+    }
+
+    @Override
+    public RespStat deleteById(Integer id) {
+
+        int status = accountMapper.deleteByPrimaryKey(id);
+
+        if (status == 1) {
+            return RespStat.build(200);
+        }
+
+        return RespStat.build(500, "删除错误");
     }
 }

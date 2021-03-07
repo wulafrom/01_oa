@@ -1,9 +1,14 @@
 spring:
+  #数据源
   datasource:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/oa?serverTimezone=UTC&useUnicode=true@characterEncoding=utf-8
     driver-class-name: com.mysql.jdbc.Driver
+ #文件上传
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:D:/upload/
+
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.mashibing.entity

@@ -1,6 +1,7 @@
 package com.mashibing.service;
 
 import com.github.pagehelper.PageInfo;
+import com.mashibing.RespStat;
 import com.mashibing.entity.Account;
 
 /**
@@ -24,4 +25,11 @@ public interface AccountService {
      * @return 多个用户信息
      */
      PageInfo<Account> findByPage(int pageNum, int pageSize);
+
+    /**
+     * 根据id删除用户
+     * @param id id
+     * @return 删除结果
+     */
+    RespStat deleteById(Integer id);
 }
