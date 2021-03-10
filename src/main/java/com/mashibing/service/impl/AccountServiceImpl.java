@@ -8,7 +8,11 @@ import com.mashibing.entity.Account;
 import com.mashibing.entity.AccountExample;
 import com.mashibing.mapper.AccountMapper;
 import com.mashibing.service.AccountService;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +23,12 @@ import java.util.List;
  * @author: h'mm
  * @date: 2021/3/6 0:24:45
  */
-@Service
+@Repository
 public class AccountServiceImpl implements AccountService {
+
+    private final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
     private final AccountMapper accountMapper;
+
 
     @Autowired
     public AccountServiceImpl(AccountMapper accountMapper) {
@@ -41,8 +48,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public PageInfo<Account> findByPage(int pageNum, int pageSize) {
 
+        List<Account> aList = accountMapper.selectByPermission();
+        String aString = aList.get(0).toString();
+        logger.info("用户角色: {}", aString);
+
         PageHelper.startPage(pageNum, pageSize);
         List<Account> accounts = accountMapper.selectByExample(new AccountExample());
+
 
         return new PageInfo<>(accounts, 5);
     }

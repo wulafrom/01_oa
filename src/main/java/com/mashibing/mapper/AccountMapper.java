@@ -48,4 +48,6 @@ public interface AccountMapper {
 
     @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
     int updateByPrimaryKey(Account record);
+
+    List<Account> selectByPermission();
 }

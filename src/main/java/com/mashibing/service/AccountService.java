@@ -3,11 +3,13 @@ package com.mashibing.service;
 import com.github.pagehelper.PageInfo;
 import com.mashibing.RespStat;
 import com.mashibing.entity.Account;
+import org.springframework.stereotype.Service;
 
 /**
  * @author: h'mm
  * @date: 2021/3/6 0:24:12
  */
+@Service
 public interface AccountService {
 
     /**

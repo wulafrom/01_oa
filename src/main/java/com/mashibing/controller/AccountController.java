@@ -101,7 +101,7 @@ public class AccountController {
 
         PageInfo<Account> page = accountService.findByPage(pageNum, pageSize);
         model.addAttribute("page", page);
-        return "/list";
+        return "/account/list";
     }
 
     /**

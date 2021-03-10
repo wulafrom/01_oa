@@ -1,9 +1,11 @@
 package com.mashibing.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * account
+ *
  * @author humm
  */
 public class Account implements Serializable {
@@ -20,6 +22,26 @@ public class Account implements Serializable {
     private String location;
 
     private String role;
+
+    private List<Role> roleList;
+
+    private List<Permission> permissionList;
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -92,12 +114,16 @@ public class Account implements Serializable {
         }
         Account other = (Account) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getLoginName() == null ? other.getLoginName() == null : this.getLoginName().equals(other.getLoginName()))
-            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-            && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
-            && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
-            && (this.getLocation() == null ? other.getLocation() == null : this.getLocation().equals(other.getLocation()))
-            && (this.getRole() == null ? other.getRole() == null : this.getRole().equals(other.getRole()));
+                && (this.getLoginName() == null ? other.getLoginName() == null :
+                this.getLoginName().equals(other.getLoginName()))
+                && (this.getPassword() == null ? other.getPassword() == null :
+                this.getPassword().equals(other.getPassword()))
+                && (this.getNickName() == null ? other.getNickName() == null :
+                this.getNickName().equals(other.getNickName()))
+                && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
+                && (this.getLocation() == null ? other.getLocation() == null :
+                this.getLocation().equals(other.getLocation()))
+                && (this.getRole() == null ? other.getRole() == null : this.getRole().equals(other.getRole()));
     }
 
     @Override
@@ -116,6 +142,14 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
+        StringBuilder sbRole = new StringBuilder();
+        for (Role role1 : roleList) {
+            sbRole.append(role1.toString());
+        }
+        StringBuilder sbPermission = new StringBuilder();
+        for (Permission permission : permissionList) {
+            sbPermission.append(permission.toString());
+        }
         return getClass().getSimpleName() +
                 " [" +
                 "Hash = " + hashCode() +
@@ -126,7 +160,9 @@ public class Account implements Serializable {
                 ", age=" + age +
                 ", location=" + location +
                 ", role=" + role +
-                ", serialVersionUID=" + serialVersionUID +
+                ", roleList {" + sbRole +
+                "} , permissionList {" + sbPermission +
+                "}, serialVersionUID=" + serialVersionUID +
                 "]";
     }
 }

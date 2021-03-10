@@ -78,6 +78,9 @@
 						<button type="submit" class="btn btn-default">搜索</button>
 					</form>
 
+					<ul class="nav navbar-nav">
+						<li class=""><a th:href="@{/manager/toPermissionAdd}">添加权限</a></li>
+					</ul>
 
 					<!--  未登录用户 -->
 					<ul th:if="${session.account} ==null" class="nav navbar-nav navbar-right">
@@ -117,31 +120,32 @@
 			<tr>
 				<th>序号</th>
 				<th>工号</th>
-				<th>loginName</th>
-				<th>nickName</th>
-				<th>age</th>
-				<th>location</th>
-				<th>role</th>
-				<th>操作</th>
+				<th>名称</th>
+				<th>uri</th>
+				<th>创建</th>
+				<th>访问</th>
+				<th>修改</th>
+				<th>删除</th>
 			</tr>
 
-			<tr th:each="account : ${page.list}">
-				<td th:text="${accountStat.count}"></td>
-				<td th:text="${account.id}">工号</td>
-				<td th:text="${account.loginName}">loginName</td>
-				<td th:text="${account.nickName}">nickName</td>
-				<td th:text="${account.age}">age</td>
-				<td th:text="${account.location}">location</td>
-				<td th:text="${account.role}">role</td>
+			<tr th:each="item : ${page.list}">
+				<td th:text="${item.id}"></td>
+				<td th:text="${item.id}">工号</td>
+				<td th:text="${item.name}">name</td>
+				<td th:text="${item.uri}">uri</td>
+				<td th:text="${item.c}">创建</td>
+				<td th:text="${item.r}">访问</td>
+				<td th:text="${item.u}">修改</td>
+				<td th:text="${item.d}">删除</td>
 				<td>
 
 
-					<a class="btn btn-danger" th:href="@{'javascript:deleteById('+${account.id}+');'}">
+					<a class="btn btn-danger" th:href="@{'javascript:deleteById('+${item.id}+');'}">
 						删除
 					</a>
-
-					修改密码
-
+					<a class="btn btn-info" th:href="@{'javascript:toPermissionModify('+${item.id}+');'}">
+						修改权限
+					</a>
 
 				</td>
 
@@ -153,18 +157,19 @@
 			<ul class="pagination">
 
 				<li th:class="${page.prePage} == 0?'disabled' :'' ">
-					<a th:href="@{${page.prePage} == 0?'javascript:void(0);' :'/account/list?pageNum='+${page.prePage}}"
+					<a th:href="@{${page.prePage} == 0?'javascript:void(0);' :'/item/list?pageNum='+${page.prePage}}"
 					   aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
 
 
-				<li th:each="pageNum : ${page.navigatepageNums}"><a th:href="@{'/account/list?pageNum='+${pageNum}}">[[${pageNum}]]</a>
+				<li th:each="pageNum : ${page.navigatepageNums}"><a
+						th:href="@{'/item/list?pageNum='+${pageNum}}">[[${pageNum}]]</a>
 				</li>
 
 				<li>
-					<a th:href="@{'/account/list?pageNum='+${page.nextPage}}" aria-label="Next">
+					<a th:href="@{'/item/list?pageNum='+${page.nextPage}}" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>
@@ -325,7 +330,9 @@
 							msg: msg,
 						}).on(function (e) {
 					callback();
+					//res=true;
 				});
+				//return res;
 			}
 
 
@@ -341,7 +348,7 @@
 				//	showMsg("haha", function() {});
 				showConfirm("确认删除该用户", function () {
 					// 确认删除
-					var url = "/account/deleteById";
+					var url = "/item/deleteById";
 					var args = {id: id};
 					// RESPStat 类型的结果
 					$.post(url, args, function (data) {
@@ -365,9 +372,11 @@
 
 			}
 
-			// 锋利的jQuery
+			function toPermissionModify(id) {
+
+				window.location.href = "/manager/toPermissionModify?id="+ id
+			}
+
 		</script>
-
-
 	</body>
 </html>
