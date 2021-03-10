@@ -3,7 +3,10 @@ package com.mashibing.controller;
 import com.github.pagehelper.PageInfo;
 import com.mashibing.RespStat;
 import com.mashibing.entity.Account;
+import com.mashibing.entity.SystemConfig;
 import com.mashibing.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +31,15 @@ import java.io.IOException;
 @RequestMapping(value = "/account")
 public class AccountController {
 
+    private final Logger logger = LoggerFactory.getLogger(AccountController.class);
+
     private final AccountService accountService;
 
-    public AccountController(AccountService accountService) {
+    private final SystemConfig systemConfig;
+
+    public AccountController(AccountService accountService, SystemConfig systemConfig) {
         this.accountService = accountService;
+        this.systemConfig = systemConfig;
     }
 
     /**
@@ -40,8 +48,9 @@ public class AccountController {
      * @return 页面路径
      */
     @RequestMapping("/login")
-    public String login() {
-
+    public String login(Model model) {
+        logger.info("config: {}", systemConfig.getSystemName());
+        model.addAttribute("systemName",systemConfig.getSystemName());
         return "account/login";
     }
 
@@ -79,6 +88,13 @@ public class AccountController {
     }
 
 
+    /**
+     * 分页获取用户数据
+     * @param pageNum 当前页
+     * @param pageSize 每页数量
+     * @param model 模板引擎内置对象
+     * @return 数据列表页面
+     */
     @RequestMapping("/list")
     public String getList(@RequestParam(defaultValue = "1") Integer pageNum,
                           @RequestParam(defaultValue = "5")Integer pageSize, Model model) {
@@ -88,6 +104,11 @@ public class AccountController {
         return "/list";
     }
 
+    /**
+     * 根据id从逻辑删除用户
+     * @param id 用户id
+     * @return 删除状态情况
+     */
     @RequestMapping(value = "/deleteById")
     @ResponseBody
     public RespStat deleteById(@RequestParam("id") Integer id){
@@ -96,6 +117,13 @@ public class AccountController {
         return respStat;
     }
 
+
+    /**
+     * 上传用户文件
+     * @param filename 文件名称
+     * @param password 用户密码
+     * @return 用户信息页面
+     */
     @RequestMapping("/fileUploadController")
     public String fileUpload (MultipartFile filename, String password) {
         System.out.println("password:" + password);
@@ -123,6 +151,10 @@ public class AccountController {
         return "/account/profile";
     }
 
+    /**
+     * 路径跳转
+     * @return 用户信息页面
+     */
     @RequestMapping("/profile")
     public String profile () {
 

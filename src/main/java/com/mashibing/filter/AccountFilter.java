@@ -60,5 +60,4 @@ public class AccountFilter implements Filter {
         }
         return false;
     }
-    
 }

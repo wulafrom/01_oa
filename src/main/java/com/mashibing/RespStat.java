@@ -1,16 +1,18 @@
 package com.mashibing;
 
+/**
+ * JSON报文
+ * @author humm
+ */
 public class RespStat {
 
 	/**
-	 * JSON报文
-	 * 状态码 
+	 * 状态码
 	 * 用于前端判断   200  = 成功
 	 * 400\500 出错
 	 * 
 	 * msg = 信息
 	 */
-	
 	private int code;
 	private String msg;
 	private String data;
@@ -52,7 +54,6 @@ public class RespStat {
 	}
 
 	public static RespStat build(int code, String msg) {
-
 		return new RespStat(code, msg, "haveNot");
 	}
 	
