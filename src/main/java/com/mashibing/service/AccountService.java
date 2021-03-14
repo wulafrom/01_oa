@@ -34,4 +34,10 @@ public interface AccountService {
      * @return 删除结果
      */
     RespStat deleteById(Integer id);
+
+    /**
+     * 根据id修改用户头像和密码
+     * @param account 从session中获取的用户
+     */
+    void updateByPrimaryKeySelective(Account account);
 }

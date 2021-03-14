@@ -1,4 +1,4 @@
-package com.mashibing.controller;
+package com.mashibing.controller.rest;
 
 import com.mashibing.RespStat;
 import com.mashibing.entity.Permission;
@@ -26,6 +26,11 @@ public class ManagerRestController {
         this.permissionService = permissionService;
     }
 
+    /**
+     * 修改权限信息
+     * @param permission 权限信息详情
+     * @return 修改状态
+     */
     @RequestMapping(value = "/update")
     public RespStat update(@RequestBody Permission permission) {
 
@@ -34,6 +39,11 @@ public class ManagerRestController {
         return RespStat.build(200);
     }
 
+    /**
+     * 添加权限
+     * @param permission 要添加权限的信息
+     * @return 添加权限的状态
+     */
     @RequestMapping(value = "/add")
     public RespStat add(@RequestBody Permission permission) {
 

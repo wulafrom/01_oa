@@ -32,4 +32,12 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    void addRolePermission(Integer roleId, Integer permissionId);
+
+    void addRolePermissions(Integer roleId, Integer[] permissions);
+
+    void deleteRolePermissionById(Integer roleId);
+
+    Role selectRoleAndPermissionByRoleId(Integer roleId);
 }

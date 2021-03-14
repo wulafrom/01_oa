@@ -1,8 +1,10 @@
 package com.mashibing.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mashibing.entity.Account;
 import com.mashibing.entity.Permission;
+import com.mashibing.entity.PermissionExample;
 import com.mashibing.mapper.AccountMapper;
 import com.mashibing.mapper.PermissionMapper;
 import com.mashibing.service.PermissionService;
@@ -27,7 +29,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public PageInfo<Permission> findByPage(Integer pageNum, Integer pageSize) {
+    public PageInfo<Permission> selectByPermission(Integer pageNum, Integer pageSize) {
         List<Account> accounts = accountMapper.selectByPermission();
 
         return new PageInfo<>(accounts.get(0).getPermissionList());
@@ -47,4 +49,13 @@ public class PermissionServiceImpl implements PermissionService {
     public void insertSelective(Permission permission) {
         permissionMapper.insertSelective(permission);
     }
+
+    @Override
+    public PageInfo<Permission> findByPage(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        PermissionExample example = new PermissionExample();
+        return new PageInfo<>(permissionMapper.selectByExample(example));
+    }
+
+
 }

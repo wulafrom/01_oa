@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * 用户接口
@@ -81,7 +82,7 @@ public class AccountController {
      * @param request 请求对象
      * @return 返回到index页面
      */
-    @RequestMapping(value = "/logout")
+    @RequestMapping(value = "/logOut")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("account");
         return "index";
@@ -119,33 +120,57 @@ public class AccountController {
 
 
     /**
-     * 上传用户文件
+     * 上传用户头像到项目下
      * @param filename 文件名称
      * @param password 用户密码
      * @return 用户信息页面
      */
-    @RequestMapping("/fileUploadController")
-    public String fileUpload (MultipartFile filename, String password) {
-        System.out.println("password:" + password);
-        System.out.println("file:" + filename.getOriginalFilename());
+    @RequestMapping("/fileUploadController/v1")
+    public String fileUploadV1 (MultipartFile filename, String password,HttpServletRequest request) {
+        logger.info("password: {}" , password);
+        logger.info("file: {}" , filename.getOriginalFilename());
+        Account account = (Account)request.getSession().getAttribute("account");
         try {
 
             File path = new File(ResourceUtils.getURL("classpath:").getPath());
             File upload = new File(path.getAbsolutePath(), "static/upload/");
-            ResourceProperties resourceProperties = new ResourceProperties();
-            for (String staticLocation : resourceProperties.getStaticLocations()) {
-                System.out.println(staticLocation);
+
+            if (!upload.exists()) {
+                upload.mkdirs();
             }
-            String uploadPath = resourceProperties.getStaticLocations()[3];
 
-            System.out.println("upload:" + uploadPath);
+            logger.info("upload: {}" , upload);
 
-            filename.transferTo(new File("D:/upload/"+filename.getOriginalFilename()));
+            filename.transferTo(new File(upload , Objects.requireNonNull(filename.getOriginalFilename())));
 
+            account.setLocation(filename.getOriginalFilename());
+            account.setPassword(password);
+            accountService.updateByPrimaryKeySelective(account);
 
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        return "/account/profile";
+    }
+
+    /**
+     * 上传用户头像到本地硬盘
+     * @param filename 文件名称
+     * @param password 用户密码
+     * @return 用户信息页面
+     */
+    @RequestMapping("/fileUploadController/v2")
+    public String fileUploadV2 (MultipartFile filename, String password,HttpServletRequest request) {
+        Account account = (Account)request.getSession().getAttribute("account");
+        try {
+
+            filename.transferTo(new File("D:\\upload" , Objects.requireNonNull(filename.getOriginalFilename())));
+
+            account.setLocation(filename.getOriginalFilename());
+            account.setPassword(password);
+            accountService.updateByPrimaryKeySelective(account);
+
+        } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }
         return "/account/profile";
@@ -161,11 +186,11 @@ public class AccountController {
         try {
             File path = new File(ResourceUtils.getURL("classpath:").getPath());
             File upload = new File(path.getAbsolutePath(), "static/upload/");
-            System.out.println(upload.getAbsolutePath());
+            logger.info("upload: {}",upload.getAbsolutePath());
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
-        };
+        }
         return "/account/profile";
     }
 

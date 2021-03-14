@@ -44,7 +44,7 @@
 							</a>
 
 							<ul class="dropdown-menu">
-								<li><a th:href="@{/item/list}">员工列表</a></li>
+								<li><a th:href="@{/account/list}">员工列表</a></li>
 							</ul>
 
 
@@ -95,6 +95,8 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 							   aria-expanded="false">
 
+								<img style=" width: 22px; margin-right: 8px;" th:src="@{'/'+${session.account.location}}"   alt="..."
+								     class="img-rounded">
 								欢迎你 : [[${session.account.loginName}]] <span class="caret"></span> </a>
 							<ul class="dropdown-menu">
 								<li><a th:href="@{/account/profile}">个人信息</a></li>
@@ -157,7 +159,7 @@
 			<ul class="pagination">
 
 				<li th:class="${page.prePage} == 0?'disabled' :'' ">
-					<a th:href="@{${page.prePage} == 0?'javascript:void(0);' :'/item/list?pageNum='+${page.prePage}}"
+					<a th:href="@{${page.prePage} == 0?'javascript:void(0);' :'/account/list?pageNum='+${page.prePage}}"
 					   aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
 					</a>
@@ -165,11 +167,11 @@
 
 
 				<li th:each="pageNum : ${page.navigatepageNums}"><a
-						th:href="@{'/item/list?pageNum='+${pageNum}}">[[${pageNum}]]</a>
+						th:href="@{'/account/list?pageNum='+${pageNum}}">[[${pageNum}]]</a>
 				</li>
 
 				<li>
-					<a th:href="@{'/item/list?pageNum='+${page.nextPage}}" aria-label="Next">
+					<a th:href="@{'/account/list?pageNum='+${page.nextPage}}" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>

@@ -10,6 +10,16 @@
     <result column="u" jdbcType="BOOLEAN" property="u" />
     <result column="d" jdbcType="BOOLEAN" property="d" />
   </resultMap>
+
+  <resultMap id="RolePermissionResultMap" type="com.mashibing.entity.Permission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uri" jdbcType="VARCHAR" property="uri" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="c" jdbcType="BOOLEAN" property="c" />
+    <result column="r" jdbcType="BOOLEAN" property="r" />
+    <result column="u" jdbcType="BOOLEAN" property="u" />
+    <result column="d" jdbcType="BOOLEAN" property="d" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -71,6 +81,12 @@
   <sql id="Base_Column_List">
     id, uri, `name`, `c`, r, u, d
   </sql>
+
+
+  <select id="selectPermissionByRoleId" resultMap="RolePermissionResultMap">
+        SELECT * FROM role_permission r WHERE r.role_id = #{roleId}
+  </select>
+
   <select id="selectByExample" parameterType="com.mashibing.entity.PermissionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

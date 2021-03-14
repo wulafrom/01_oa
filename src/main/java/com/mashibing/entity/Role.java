@@ -1,6 +1,7 @@
 package com.mashibing.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * role
@@ -10,6 +11,20 @@ public class Role implements Serializable {
     private Integer id;
 
     private String name;
+
+    private List<Permission> permissionList;
+
+    public List<Permission> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -28,6 +43,8 @@ public class Role implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
     @Override
     public boolean equals(Object that) {

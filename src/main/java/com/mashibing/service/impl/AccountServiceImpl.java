@@ -37,20 +37,18 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findByLoginNameAndPassword(String loginName, String password) {
-        AccountExample accountExample = new AccountExample();
-        accountExample.createCriteria()
-                .andLoginNameEqualTo(loginName)
-                .andPasswordEqualTo(password);
-        List<Account> accounts = accountMapper.selectByExample(accountExample);
-        return accounts.isEmpty() ? null : accounts.get(0);
+        Account account = accountMapper.findByLoginNameAndPassword(loginName,password);
+        return account;
     }
 
     @Override
     public PageInfo<Account> findByPage(int pageNum, int pageSize) {
 
         List<Account> aList = accountMapper.selectByPermission();
-        String aString = aList.get(0).toString();
-        logger.info("用户角色: {}", aString);
+        if (null!=aList) {
+            String aString = aList.get(0).toString();
+            logger.info("用户角色: {}", aString);
+        }
 
         PageHelper.startPage(pageNum, pageSize);
         List<Account> accounts = accountMapper.selectByExample(new AccountExample());
@@ -69,5 +67,10 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return RespStat.build(500, "删除错误");
+    }
+
+    @Override
+    public void updateByPrimaryKeySelective(Account account) {
+        accountMapper.updateByPrimaryKeySelective(account);
     }
 }

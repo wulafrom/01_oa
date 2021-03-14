@@ -44,7 +44,7 @@
 							</a>
 
 							<ul class="dropdown-menu">
-								<li><a th:href="@{/item/list}">员工列表</a></li>
+								<li><a th:href="@{/account/list}">员工列表</a></li>
 							</ul>
 
 
@@ -91,7 +91,10 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 							   aria-expanded="false">
-
+								<img style=" width: 22px; margin-right: 8px;" th:src="@{'/'+${session.account.location}}"   alt="..."
+								     class="img-rounded">
+								<img style=" width: 22px; margin-right: 8px;" th:src="@{'/'+${session.account.location}}"   alt="..."
+								     class="img-rounded">
 								欢迎你 : [[${session.account.loginName}]] <span class="caret"></span> </a>
 							<ul class="dropdown-menu">
 								<li><a th:href="@{/account/profile}">个人信息</a></li>
@@ -116,30 +119,23 @@
 			<tr>
 				<th>序号</th>
 				<th>工号</th>
-				<th>loginName</th>
-				<th>nickName</th>
-				<th>age</th>
-				<th>location</th>
-				<th>role</th>
+				<th>name</th>
 				<th>操作</th>
 			</tr>
 
-			<tr th:each="account : ${page.list}">
-				<td th:text="${accountStat.count}"></td>
-				<td th:text="${account.id}">工号</td>
-				<td th:text="${account.loginName}">loginName</td>
-				<td th:text="${account.nickName}">nickName</td>
-				<td th:text="${account.age}">age</td>
-				<td th:text="${account.location}">location</td>
-				<td th:text="${account.role}">role</td>
+			<tr th:each="role : ${page.list}">
+				<td th:text="${roleStat.count}"></td>
+				<td th:text="${role.id}">工号</td>
+				<td th:text="${role.name}">loginName</td>
 				<td>
 
-
-					<a class="btn btn-danger" th:href="@{'javascript:deleteById('+${account.id}+');'}">
+					<a class="btn btn-danger" th:href="@{'javascript:deleteById('+${role.id}+');'}">
 						删除
 					</a>
 
-					修改密码
+					<a class="btn btn-info" th:href="@{'javascript:rolePermission('+${role.id}+');'}">
+						分配权限
+					</a>
 
 
 				</td>
@@ -355,18 +351,12 @@
 						}
 					});
 				});
-
-
-				//	var isDel = confirm("真的确定要删除吗？");
-
-//		if(isDel == false){
-				//		return;
-				//	}
-
-
 			}
 
-			// 锋利的jQuery
+			function rolePermission(id) {
+				window.location.href = "/manager/toRolePermission?id=" + id
+			}
+
 		</script>
 
 

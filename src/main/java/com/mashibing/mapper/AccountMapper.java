@@ -50,4 +50,6 @@ public interface AccountMapper {
     int updateByPrimaryKey(Account record);
 
     List<Account> selectByPermission();
+
+    Account findByLoginNameAndPassword(String loginName, String password);
 }

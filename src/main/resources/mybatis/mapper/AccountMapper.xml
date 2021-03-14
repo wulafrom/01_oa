@@ -60,6 +60,30 @@
                 LEFT JOIN permission p ON p.id = rp.permission_id
     </select>
 
+    <select id="findByLoginNameAndPassword" resultMap="selectByPermissionResultMap">
+        SELECT
+            ac.id as aid,
+            ac.login_name,
+            ac.location,
+            ac.password,
+            r.id as rid,
+            r.name AS rname,
+            p.id as pid,
+            p.uri as puri,
+            p.c,
+            p.d,
+            p.r,
+            p.u,
+            p.name AS pname
+        FROM
+            account ac
+                LEFT JOIN account_role ar ON ac.id = ar.account_id
+                LEFT JOIN role r ON r.id = ar.role_id
+                LEFT JOIN role_permission rp on r.id = rp.role_id
+                LEFT JOIN permission p ON p.id = rp.permission_id
+        WHERE ac.login_name = #{loginName}
+          AND ac.password = #{password}
+    </select>
 
     <sql id="Example_Where_Clause">
         <where>
