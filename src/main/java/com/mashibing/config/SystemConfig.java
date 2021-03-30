@@ -1,4 +1,4 @@
-package com.mashibing.entity;
+package com.mashibing.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,11 +14,18 @@ public class SystemConfig {
     @Value("${system.name}")
     private String systemName;
 
+    @Value("${system.domain}")
+    private String domain;
+
     public SystemConfig() {
     }
 
-    public SystemConfig(String systemName) {
-        this.systemName = systemName;
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public String getSystemName() {

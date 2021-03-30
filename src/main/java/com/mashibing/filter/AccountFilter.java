@@ -26,7 +26,6 @@ public class AccountFilter implements Filter {
     private final Logger logger = LoggerFactory.getLogger(AccountFilter.class);
 
     private final String[] ignorePath = {"/js", "/account/login", "/account/validateAccount", "/images", "/css",
-            "/index",
             "/favicon" + "/errorPage"};
 
     @Override
@@ -86,7 +85,7 @@ public class AccountFilter implements Filter {
     private boolean canPassIgnore(String uri) {
 
         for (String path : ignorePath) {
-            if (uri.startsWith(path)) {
+            if (!"/".equals(uri) && uri.startsWith(path)) {
                 return true;
             }
         }

@@ -87,8 +87,9 @@
 							   aria-expanded="false">
 
 								<!-- 头像 -->
-								<img style=" width: 22px; margin-right: 8px;" th:src="@{'/upload/'+${session.account.location}}"   alt="..."  class="img-rounded">
-								<img style=" width: 22px; margin-right: 8px;" th:src="@{'/'+${session.account.location}}"   alt="..."
+								<!--<img style=" width: 22px; margin-right: 8px;" th:src="@{'/upload/'+${session.account.location}}"   alt="..."  class="img-rounded">
+								<img style=" width: 22px; margin-right: 8px;" th:src="@{'/'+${session.account.location}}"   alt="..."     class="img-rounded">-->
+								<img style=" width: 22px; margin-right: 8px;" th:src="${session.account.location}"   alt="..."
 								     class="img-rounded">
 
 
@@ -161,6 +162,32 @@
 						<td>密码：</td>
 						<td><input type="password" name="password"></td>
 
+					</tr>
+
+					<tr>
+						<td>头像：</td>
+						<td>
+							上传文件：<input type="file" name="filename"/><br/>
+							<input type="submit"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+
+		<h2>fileUploadController/v3 上传到Fastdfs</h2>
+		<div align="center" style="width: 300px">
+			<form th:action="@{/account/fileUploadController/v3}"  method="post" enctype="multipart/form-data">
+				<table class="table table-bordered">
+					<tr>
+						<td>登录名：</td>
+						<td>[[${session.account.loginName}]]</td>
+					</tr>
+
+					<tr>
+						<td>密码：</td>
+						<td><input type="password" name="password"></td>
 					</tr>
 
 					<tr>

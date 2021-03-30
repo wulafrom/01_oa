@@ -54,7 +54,7 @@ public class ManagerController {
                               @RequestParam(defaultValue = "5") Integer pageSize, Model model) {
         PageInfo<Account> page = accountService.findByPage(pageNum, pageSize);
         model.addAttribute("page", page);
-        return "/manager/accountList";
+        return "manager/accountList";
     }
 
     /**
@@ -70,7 +70,7 @@ public class ManagerController {
                            @RequestParam(defaultValue = "5") Integer pageSize, Model model) {
         PageInfo<Role> page = roleService.findByPage(pageNum, pageSize);
         model.addAttribute("page", page);
-        return "/manager/roleList";
+        return "manager/roleList";
     }
 
     /**
@@ -86,7 +86,7 @@ public class ManagerController {
                                  @RequestParam(defaultValue = "5") Integer pageSize, Model model) {
         PageInfo<Permission> page = permissionService.findByPage(pageNum, pageSize);
         model.addAttribute("page", page);
-        return "/manager/permissionList";
+        return "manager/permissionList";
     }
 
     /**
@@ -100,7 +100,7 @@ public class ManagerController {
     public String toPermissionModify(@RequestParam(name = "id") Integer id, Model model) {
         Permission permission = permissionService.selectByPrimaryKey(id);
         model.addAttribute("permission", permission);
-        return "/manager/permissionModify";
+        return "manager/permissionModify";
     }
 
     /**
@@ -110,7 +110,7 @@ public class ManagerController {
      */
     @RequestMapping("/toPermissionAdd")
     public String toPermissionAdd() {
-        return "/manager/permissionAdd";
+        return "manager/permissionAdd";
     }
 
 
@@ -139,7 +139,7 @@ public class ManagerController {
         model.addAttribute("role", role);
         model.addAttribute("page", page);
 
-        return "/manager/rolePermission";
+        return "manager/rolePermission";
     }
 
 

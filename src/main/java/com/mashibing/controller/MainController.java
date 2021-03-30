@@ -36,6 +36,6 @@ public class MainController {
      */
     @RequestMapping(value = "/errorPage")
     public String errorPage(){
-        return "/errorPage";
+        return "errorPage";
     }
 }
